@@ -6,7 +6,7 @@ import { FriendRouter } from "./router/friend.router.js";
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-console.log(0, "root");
+app.use(express.json());
 
 app.use("/users", UserRouter().registerRoutes());
 app.use("/groups", GroupRouter().registerRoutes());

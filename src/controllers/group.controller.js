@@ -8,34 +8,59 @@ const GroupController = () => {
   const getById = (req, res) => {
     console.log(2.1, "[Group] Controller Get By Id");
 
-    groupService.getById(123);
+    const group = groupService.getById(req.params.id);
+
+    if (!group) {
+      return res
+        .status(404)
+        .json({ message: `Group with id ${req.params.id} does not exist` });
+    }
 
     return res.status(200).json({
-      name: "foo",
+      group,
     });
   };
 
   const getAll = (_req, res) => {
     console.log(2.1, "[Group] Controller Get All");
-    groupService.getAll();
-    return res.status(200).json([]);
+    const groups = groupService.getAll();
+
+    return res.status(200).json({
+      groups,
+    });
   };
 
   const create = (req, res) => {
     console.log(2.1, "[Group] Controller Create");
-    groupService.create({});
-    return res.status(200).json({});
+    const newGroup = groupService.create(req.body);
+    return res.status(201).json(newGroup);
   };
 
   const editById = (req, res) => {
     console.log(2.1, "[Group] Controller Edit");
-    groupService.editById(123, {});
-    return res.status(200).json({});
+    const updated = groupService.editById(req.params.id, req.body);
+
+    if (updated) {
+      return res.status(204).send();
+    }
+
+    return res.status(404).json({
+      message: `Group with id ${req.params.id} does not exist`,
+    });
   };
 
   const removeById = (req, res) => {
     console.log(2.1, "[Group] Controller Remove");
-    return res.status(200).json({});
+
+    const removed = groupService.removeById(req.params.id);
+
+    if (removed) {
+      return res.status(204).send();
+    }
+
+    return res.status(404).json({
+      message: `Group with id ${req.params.id} does not exist`,
+    });
   };
 
   return {
