@@ -3,13 +3,13 @@ const Model = () => {
 
   console.log(4, "[Group] Model");
 
-  const findUnique = (id) => {
+  const getById = (id) => {
     console.log(4.1, "[Database] Model findUnique");
 
     return entities.find((entity) => entity.id === id);
   };
 
-  const findMany = () => {
+  const getAll = () => {
     console.log(4.1, "[Database] Model findMany");
 
     return entities;
@@ -58,8 +58,8 @@ const Model = () => {
   };
 
   return {
-    findUnique,
-    findMany,
+    getById,
+    getAll,
     create,
     delete: del,
     update,

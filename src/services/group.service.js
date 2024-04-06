@@ -8,15 +8,18 @@ const GroupService = () => {
   const getById = (id) => {
     console.log(id);
     console.log(3.1, "[Group] Service Get By Id");
+    return groupModel.getById(id);
   };
 
   const getAll = () => {
     console.log(3.1, "[Group] Service Get All");
+    return groupModel.getAll();
   };
 
   const create = (newGroup) => {
     console.log(newGroup);
     console.log(3.1, "[Group] Service Create");
+    return groupModel.create(newGroup);
   };
 
   const editById = (id, group) => {
