@@ -1,18 +1,27 @@
-const Model = () => {
-  const entities = [];
+const Model = (initialEntities) => {
+  const entities = initialEntities || [];
 
   console.log(4, "[Group] Model");
 
   const findUnique = (id) => {
     console.log(4.1, "[Database] Model findUnique");
 
-    return entities.find((entity) => entity.id === id);
+    return entities.find((entity) => entity.id === Number(id));
   };
 
   const findMany = () => {
     console.log(4.1, "[Database] Model findMany");
 
     return entities;
+  };
+
+  const findWhere = (attribute, value) => {
+    console.log(4.1, "[Database] Model findWhere");
+
+    // we still need to check that both of the sides of the conditionals are lowercase
+    return entities.find((entity) => {
+      return entity[attribute] === value;
+    });
   };
 
   const create = (entity) => {
@@ -63,6 +72,7 @@ const Model = () => {
     create,
     delete: del,
     update,
+    findWhere,
   };
 };
 

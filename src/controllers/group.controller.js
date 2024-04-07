@@ -32,8 +32,55 @@ const GroupController = () => {
 
   const create = (req, res) => {
     console.log(2.1, "[Group] Controller Create");
-    const newGroup = groupService.create(req.body);
-    return res.status(201).json(newGroup);
+
+    // extracting only the fields we need
+    const { name, color } = req.body;
+
+    if (!name || !color) {
+      return res.status(400).json({
+        message: "The field name is missing",
+      });
+    }
+
+    if (typeof name !== "string") {
+      return res.status(400).json({
+        message: "The field name should be a string",
+      });
+    }
+
+    if (!name.trim()) {
+      return res.status(400).json({
+        message: "The field name can not be empty",
+      });
+    }
+
+    if (typeof color !== "string") {
+      return res.status(400).json({
+        message: "The field color should be a string",
+      });
+    }
+
+    if (!color.trim()) {
+      return res.status(400).json({
+        message: "The field color can not be empty",
+      });
+    }
+
+    // creating our own body only with the fields we really need (name & color only)
+    // doing this we discard the rest of the fields we may receive in the body
+    const sanitizedBody = {
+      name: name.trim(),
+      color: color.trim(),
+    };
+
+    const { newGroup, success, message, code } =
+      groupService.create(sanitizedBody);
+
+    if (success) {
+      return res.status(code).json(newGroup);
+    } else {
+      return res.status(code).json(message);
+    }
   };
 
   const editById = (req, res) => {
