@@ -6,7 +6,7 @@ const GroupService = () => {
   const groupModel = Model([]);
 
   const getById = (id) => {
-    console.log(id, typeof id);
+    console.log(id);
     console.log(3.1, "[Group] Service Get By Id");
     return groupModel.getById(id);
   };

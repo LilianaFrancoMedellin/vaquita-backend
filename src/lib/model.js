@@ -18,7 +18,7 @@ const Model = (initialEntities) => {
   const findWhere = (attribute, value) => {
     console.log(4.1, "[Database] Model findWhere");
 
-    // we still need to check that both of the sides of the conditionals are lowercase
+    // we still need to check that both sides of the validation are lowercase
     return entities.find((entity) => {
       return entity[attribute] === value;
     });
