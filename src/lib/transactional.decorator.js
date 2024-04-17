@@ -40,7 +40,8 @@ const transactionalDecorator = (controllerFn) => {
                 console.info('begin transaction');
                 await dbClient.query('BEGIN');
             }
-            await controllerFn(req,res,dbClient);
+            req.dbClient = dbClient;
+            await controllerFn(req,res);
             if (doTransaction){
                 console.info('commit transaction');
                 await dbClient.query('COMMIT');

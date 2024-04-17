@@ -1,5 +1,5 @@
 import createApplicationError from "../lib/application.error.js";
-import Model from "../persistence/groups.database.js";
+import Model from "../repository/groups.database.js";
 
 const GroupService = (dbClient) => {
   console.log(3, "[Group] Service");
@@ -34,6 +34,10 @@ const GroupService = (dbClient) => {
     console.log(id);
     console.log(3.1, "[Group] Service Remove");
   };
+
+  if (!dbClient) {
+    throw Error('dbClient must be provided');
+  }
 
   return {
     getAll,

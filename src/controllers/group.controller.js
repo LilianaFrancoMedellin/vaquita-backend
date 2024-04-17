@@ -3,9 +3,9 @@ import { GroupService } from "../services/group.service.js";
 const GroupController = () => {
   console.log(2, "[Group] Controller");
 
-  const getById = async (req, res, dbClient) => {
+  const getById = async (req, res) => {
     console.log(2.1, "[Group] Controller Get By Id");
-    const groupService = GroupService(dbClient);
+    const groupService = GroupService(req.dbClient);
 
     const group = await groupService.getById(req.params.id);
 
@@ -21,9 +21,9 @@ const GroupController = () => {
     });
   };
 
-  const getAll = async(_req, res, dbClient) => {
+  const getAll = async(req, res) => {
     console.log(2.1, "[Group] Controller Get All");
-    const groupService = GroupService(dbClient);
+    const groupService = GroupService(req.dbClient);
     const groups = await groupService.getAll();
 
     res.status(200).json({
@@ -31,9 +31,9 @@ const GroupController = () => {
     });
   };
 
-  const create = async (req, res, dbClient) => {
+  const create = async (req, res) => {
     console.log(2.1, "[Group] Controller Create");
-    const groupService = GroupService(dbClient);
+    const groupService = GroupService(req.dbClient);
     const newGroup = await groupService.create(req.body);
     return res.status(201).json(newGroup);
   };

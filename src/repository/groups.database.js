@@ -60,7 +60,7 @@ const Database = (dbClient) => {
     };
   
     if (!dbClient) {
-        throw Error('dbClient must be provided');
+      throw Error('dbClient must be provided');
     }
 
     return {
