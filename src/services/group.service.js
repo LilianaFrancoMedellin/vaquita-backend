@@ -1,25 +1,28 @@
-import { Model } from "../lib/model.js";
+import createApplicationError from "../lib/application.error.js";
+import Model from "../persistence/groups.database.js";
 
-const GroupService = () => {
+const GroupService = (dbClient) => {
   console.log(3, "[Group] Service");
 
-  const groupModel = Model();
+  const groupModel = Model(dbClient);
 
-  const getById = (id) => {
-    console.log(id);
+  const getById = async (id) => {
     console.log(3.1, "[Group] Service Get By Id");
-    return groupModel.getById(id);
+    return await groupModel.getById(id);
   };
 
-  const getAll = () => {
+  const getAll = async () => {
     console.log(3.1, "[Group] Service Get All");
-    return groupModel.getAll();
+    return await groupModel.getAll();
   };
 
-  const create = (newGroup) => {
-    console.log(newGroup);
+  const create = async (newGroup) => {
     console.log(3.1, "[Group] Service Create");
-    return groupModel.create(newGroup);
+    try {
+      return await groupModel.create(newGroup);
+    } catch(err) {
+      throw createApplicationError('no se puede guardar', 400, err);
+    }
   };
 
   const editById = (id, group) => {

@@ -3,36 +3,38 @@ import { GroupService } from "../services/group.service.js";
 const GroupController = () => {
   console.log(2, "[Group] Controller");
 
-  const groupService = GroupService();
-
-  const getById = (req, res) => {
+  const getById = async (req, res, dbClient) => {
     console.log(2.1, "[Group] Controller Get By Id");
+    const groupService = GroupService(dbClient);
 
-    const group = groupService.getById(req.params.id);
+    const group = await groupService.getById(req.params.id);
 
     if (!group) {
-      return res
+      res
         .status(404)
         .json({ message: `Group with id ${req.params.id} does not exist` });
+      return;
     }
 
-    return res.status(200).json({
+    res.status(200).json({
       group,
     });
   };
 
-  const getAll = (_req, res) => {
+  const getAll = async(_req, res, dbClient) => {
     console.log(2.1, "[Group] Controller Get All");
-    const groups = groupService.getAll();
+    const groupService = GroupService(dbClient);
+    const groups = await groupService.getAll();
 
-    return res.status(200).json({
+    res.status(200).json({
       groups,
     });
   };
 
-  const create = (req, res) => {
+  const create = async (req, res, dbClient) => {
     console.log(2.1, "[Group] Controller Create");
-    const newGroup = groupService.create(req.body);
+    const groupService = GroupService(dbClient);
+    const newGroup = await groupService.create(req.body);
     return res.status(201).json(newGroup);
   };
 
