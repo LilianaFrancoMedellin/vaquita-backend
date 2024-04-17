@@ -1,19 +1,18 @@
-import express from "express";
+import Router from "express-promise-router";
 import { GroupController } from "../controllers/group.controller.js";
+import transactionalDecorator from "../lib/transactional.decorator.js";
 
 const GroupRouter = () => {
   const groupController = GroupController();
   console.log(1, "[Group] Router");
 
   const registerRoutes = () => {
-    const router = express.Router();
+    const router = Router();
     console.log(1.1, "[Group] Routes Registered");
 
-    router.get("/:id", groupController.getById);
-    router.get("/", groupController.getAll);
-    router.post("/", groupController.create);
-    router.put("/:id", groupController.editById);
-    router.delete("/:id", groupController.removeById);
+    router.get("/:id", transactionalDecorator(groupController.getById));
+    router.get("/", transactionalDecorator(groupController.getAll));
+    router.post("/", transactionalDecorator(groupController.create));
 
     return router;
   };
