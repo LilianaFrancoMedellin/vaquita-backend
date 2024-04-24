@@ -1,0 +1,8 @@
+POST http://localhost:3001/groups HTTP/1.1
+content-type: application/json
+
+{
+  "name": "GRupo número Migue",
+  "color": "#EEE",
+  "ownerUserId": 1
+}
