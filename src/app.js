@@ -30,7 +30,8 @@ app.post("/login", async (req, res) => {
 app.get(
   "/check",
   passport.authenticate("jwt", { session: false }),
-  (req, res) => {
+  async (req, res) => {
+    console.log(await req.user);
     res.send("You are authenticated");
   }
 );
