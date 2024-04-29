@@ -34,11 +34,11 @@ const GroupController = () => {
     console.log(2.1, "[Group] Controller Create");
 
     // extracting only the fields we need
-    const { name, color, ownerUserId } = req.body;
+    const { name, color } = req.body;
 
-    if (!name || !color || !ownerUserId) {
+    if (!name || !color) {
       return res.status(400).json({
-        message: "The fields [name, color, ownerUserId] are required",
+        message: "The fields [name, color] are required",
       });
     }
 
@@ -66,24 +66,12 @@ const GroupController = () => {
       });
     }
 
-    if (typeof ownerUserId !== "number") {
-      return res.status(400).json({
-        message: "The field ownerUserId should be a number",
-      });
-    }
-
-    if (ownerUserId <= 0) {
-      return res.status(400).json({
-        message: "The field ownerUserId should be positive",
-      });
-    }
-
     // creating our own body only with the fields we really need (name & color only)
     // doing this we discard the rest of the fields we may receive in the body
     const sanitizedBody = {
       name: name.trim(),
       color: color.trim(),
-      ownerUserId,
+      ownerUserId: 1, // TODO use the user id from the authenticated user
     };
 
     const { newGroup, success, message, code } = await groupService.create(

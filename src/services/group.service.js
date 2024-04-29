@@ -21,8 +21,7 @@ const GroupService = () => {
   const create = async (newGroup) => {
     console.log(newGroup);
     console.log(3.1, "[Group] Service Create");
-
-    const { name, ownerUserId } = newGroup;
+    const { name } = newGroup;
 
     if (name.length > 30) {
       return {
@@ -43,17 +42,6 @@ const GroupService = () => {
         code: 409,
       };
     }
-
-    // const userFound = userModel.getById(ownerUserId);
-
-    // if (!userFound) {
-    //   return {
-    //     newGroup: null,
-    //     success: false,
-    //     message: "The user does not exists",
-    //     code: 409,
-    //   };
-    // }
 
     const createdGroup = await groupModel.create(newGroup);
 

@@ -6,7 +6,7 @@ const GroupModel = (initialEntities) => {
   console.log(4, "[Group] Model");
 
   const getById = async (id) => {
-    console.log(4.1, "[Database] Model findUnique");
+    console.log(4.1, "[Database] Model getById");
 
     const client = await connectionPool.connect();
 
@@ -19,14 +19,8 @@ const GroupModel = (initialEntities) => {
     return result.rows[0];
   };
 
-  const getByFieldId = (attribute, id) => {
-    console.log(4.1, "[Database] Model getByFieldId");
-
-    return entities.find((entity) => entity[attribute] === id);
-  };
-
   const getAll = async () => {
-    console.log(4.1, "[Database] Model findMany");
+    console.log(4.1, "[Database] Model getAll");
 
     const client = await connectionPool.connect();
 
@@ -67,6 +61,7 @@ const GroupModel = (initialEntities) => {
     return result.rows[0];
   };
 
+  // TODO still need to be updated with the database
   const update = (id, newEntity) => {
     console.log(4.1, "[Database] Model update");
 
@@ -95,7 +90,6 @@ const GroupModel = (initialEntities) => {
 
   return {
     getById,
-    getByFieldId,
     getAll,
     create,
     delete: del,

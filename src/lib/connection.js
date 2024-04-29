@@ -3,6 +3,7 @@ import "dotenv/config";
 
 const { Pool } = pg;
 
+// one way of doing it
 // const pool = new Pool({
 //   user: process.env.PGUSER,
 //   host: process.env.PGHOST,
@@ -11,6 +12,7 @@ const { Pool } = pg;
 //   port: process.env.PGPORT,
 // });
 
+// recommended way to it
 const pool = new Pool();
 
 export default pool;

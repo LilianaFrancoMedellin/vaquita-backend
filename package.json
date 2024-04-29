@@ -9,7 +9,7 @@
     "migrations": "node src/utils/migrations.js"
   },
   "keywords": [],
-  "author": "teo-garcia",
+  "author": "WWC Medellín",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
