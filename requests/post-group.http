@@ -1,8 +1,8 @@
 POST http://localhost:3001/groups HTTP/1.1
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsImlhdCI6MTcxNDIzNjE0Mn0.O1shwmhhH1Kj1kwN1q5CjhX7BlTrYkkqaQ6tLavIrrw
 
 {
-  "name": "GRupo número Migue",
-  "color": "#EEE",
-  "ownerUserId": 1
+  "name": "GRupo número Migue1111",
+  "color": "#EEE"
 }

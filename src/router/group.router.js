@@ -1,4 +1,5 @@
 import express from "express";
+import passport from "passport";
 import { GroupController } from "../controllers/group.controller.js";
 
 const GroupRouter = () => {
@@ -11,7 +12,11 @@ const GroupRouter = () => {
 
     router.get("/:id", groupController.getById);
     router.get("/", groupController.getAll);
-    router.post("/", groupController.create);
+    router.post(
+      "/",
+      passport.authenticate("jwt", { session: false }),
+      groupController.create
+    );
     router.put("/:id", groupController.editById);
     router.delete("/:id", groupController.removeById);
 
