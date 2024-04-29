@@ -71,7 +71,7 @@ const GroupController = () => {
     const sanitizedBody = {
       name: name.trim(),
       color: color.trim(),
-      ownerUserId: 1, // TODO use the user id from the authenticated user
+      ownerUserId: req.user.id,
     };
 
     const { newGroup, success, message, code } = await groupService.create(
