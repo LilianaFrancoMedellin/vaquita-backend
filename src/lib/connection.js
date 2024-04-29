@@ -12,7 +12,7 @@ const { Pool } = pg;
 //   port: process.env.PGPORT,
 // });
 
-// recommended way to it
+// recommended way to do it
 const pool = new Pool();
 
 export default pool;
