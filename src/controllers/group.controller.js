@@ -1,14 +1,14 @@
-import { GroupService } from "../services/group.service.js";
-import groupsSchemaValidation from "../validations/groups.schema.validation.js";
-import { StatusCodes } from "http-status-codes";
+import { GroupService } from '../services/group.service.js';
+import groupsSchemaValidation from '../validations/groups.schema.validation.js';
+import { StatusCodes } from 'http-status-codes';
 
 const GroupController = () => {
-  console.log(2, "[Group] Controller");
+  console.log(2, '[Group] Controller');
 
   const groupService = GroupService();
 
   const getById = async (req, res) => {
-    console.log(2.1, "[Group] Controller Get By Id");
+    console.log(2.1, '[Group] Controller Get By Id');
 
     const group = await groupService.getById(req.params.id);
 
@@ -24,7 +24,7 @@ const GroupController = () => {
   };
 
   const getAll = async (_req, res) => {
-    console.log(2.1, "[Group] Controller Get All");
+    console.log(2.1, '[Group] Controller Get All');
     const groups = await groupService.getAll();
 
     return res.status(StatusCodes.OK).json({
@@ -33,7 +33,7 @@ const GroupController = () => {
   };
 
   const create = async (req, res) => {
-    console.log(2.1, "[Group] Controller Create");
+    console.log(2.1, '[Group] Controller Create');
 
     const { error, value } = groupsSchemaValidation.validate(req.body, {
       abortEarly: false,
@@ -59,7 +59,7 @@ const GroupController = () => {
       if (group) {
         return res.status(StatusCodes.CREATED).json(group);
       } else {
-        return res.status(StatusCodes.CONFLICT).json("An error ocurred");
+        return res.status(StatusCodes.CONFLICT).json('An error ocurred');
       }
     } catch (error) {
       return res
@@ -69,7 +69,7 @@ const GroupController = () => {
   };
 
   const editById = (req, res) => {
-    console.log(2.1, "[Group] Controller Edit");
+    console.log(2.1, '[Group] Controller Edit');
     const updated = groupService.editById(req.params.id, req.body);
 
     if (updated) {
@@ -82,7 +82,7 @@ const GroupController = () => {
   };
 
   const removeById = async (req, res) => {
-    console.log(2.1, "[Group] Controller Remove");
+    console.log(2.1, '[Group] Controller Remove');
 
     const removed = await groupService.removeById(req.params.id);
 
