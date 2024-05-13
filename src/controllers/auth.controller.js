@@ -11,10 +11,9 @@ const AuthController = () => {
   const login = async (req, res) => {
     const { email, password } = req.body;
     const user = await userService.getByEmail(email);
+
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res
-        .status(StatusCodes.UNAUTHORIZED)
-        .json({ message: 'Invalid credentials' });
+      return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Invalid credentials' });
     }
 
     const payload = { id: user.id };
