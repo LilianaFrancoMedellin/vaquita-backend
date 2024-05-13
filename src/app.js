@@ -1,5 +1,6 @@
 import express from 'express';
 import passport from 'passport';
+import cors from 'cors';
 import { GroupRouter } from './router/group.router.js';
 import { UserRouter } from './router/user.router.js';
 import { AuthRouter } from './router/auth.router.js';
@@ -9,6 +10,7 @@ import './utils/passport.config.js'; // Your Passport configuration
 const PORT = process.env.PORT || 3001;
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(passport.initialize());
 
