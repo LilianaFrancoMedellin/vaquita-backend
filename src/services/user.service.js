@@ -11,20 +11,15 @@ const UserService = () => {
     return userModel.getById(id);
   };
 
-  const create = async (newUser) => {
+  const create = (newUser) => {
     console.log(3.1, '[User] Service Create');
-    const createdUser = await userModel.create(newUser);
 
-    return {
-      newUser: createdUser,
-      success: true,
-      message: 'User created successfully',
-      code: 201,
-    };
+    return userModel.create(newUser);
   };
 
   const getByEmail = (email) => {
     console.log(3.1, '[User] Service Get By email');
+
     return userModel.getByEmail(email);
   };
 

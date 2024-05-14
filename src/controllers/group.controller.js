@@ -42,7 +42,7 @@ const GroupController = () => {
 
     if (error) {
       return res.status(StatusCodes.BAD_REQUEST).json({
-        message: error.details.map((detail) => detail.message),
+        messages: error.details.map((detail) => detail.message),
       });
     }
 
@@ -57,7 +57,7 @@ const GroupController = () => {
       const group = await groupService.create(sanitizedBody);
 
       if (group) {
-        return res.status(StatusCodes.CREATED).json(group);
+        return res.status(StatusCodes.CREATED).json({ group });
       } else {
         return res.status(StatusCodes.CONFLICT).json('An error ocurred');
       }
@@ -68,31 +68,47 @@ const GroupController = () => {
     }
   };
 
-  const editById = (req, res) => {
+  const editById = async (req, res) => {
     console.log(2.1, '[Group] Controller Edit');
-    const updated = groupService.editById(req.params.id, req.body);
 
-    if (updated) {
-      return res.status(StatusCodes.NO_CONTENT).send();
+    const { error, value } = groupsSchemaValidation.validate(req.body, {
+      abortEarly: false,
+      stripUnknown: true,
+    });
+
+    if (error) {
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        messages: error.details.map((detail) => detail.message),
+      });
     }
 
-    return res.status(StatusCodes.NOT_FOUND).json({
-      message: `Group with id ${req.params.id} does not exist`,
-    });
+    try {
+      const group = await groupService.editById(req.params.id, value);
+
+      if (group) {
+        return res.status(StatusCodes.OK).json({ group });
+      } else {
+        return res.status(StatusCodes.CONFLICT).json('An error ocurred');
+      }
+    } catch (error) {
+      return res.status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json(error.message);
+    }
   };
 
   const removeById = async (req, res) => {
     console.log(2.1, '[Group] Controller Remove');
 
-    const removed = await groupService.removeById(req.params.id);
+    try {
+      const removed = await groupService.removeById(req.params.id);
 
-    if (removed) {
-      return res.status(StatusCodes.NO_CONTENT).send();
+      if (removed) {
+        return res.status(StatusCodes.NO_CONTENT).send();
+      } else {
+        return res.status(StatusCodes.CONFLICT).json('An error ocurred');
+      }
+    } catch (error) {
+      return res.status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json(error.message);
     }
-
-    return res.status(StatusCodes.BAD_REQUEST).json({
-      message: `Group with id ${req.params.id} does not exist`,
-    });
   };
 
   return {
