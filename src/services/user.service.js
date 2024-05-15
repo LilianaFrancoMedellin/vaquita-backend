@@ -1,9 +1,9 @@
 import { UserModel } from '../models/user.model.js';
 
-const userModel = UserModel();
-
 const UserService = () => {
   console.log(3, '[User] Service');
+
+  const userModel = UserModel();
 
   const getById = (id) => {
     console.log(3.1, '[User] Service Get By Id');
