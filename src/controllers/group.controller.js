@@ -1,11 +1,9 @@
-import { GroupService } from '../services/group.service.js';
+import groupService from '../services/group.service.js';
 import groupsSchemaValidation from '../validations/groups.schema.validation.js';
 import { StatusCodes } from 'http-status-codes';
 
 const GroupController = () => {
   console.log(2, '[Group] Controller');
-
-  const groupService = GroupService();
 
   const getById = async (req, res) => {
     console.log(2.1, '[Group] Controller Get By Id');
@@ -60,10 +58,14 @@ const GroupController = () => {
       if (group) {
         return res.status(StatusCodes.CREATED).json({ group });
       } else {
-        return res.status(StatusCodes.CONFLICT).json('An error ocurred');
+        return res.status(StatusCodes.CONFLICT).json({
+          message: 'An error ocurred',
+        });
       }
     } catch (error) {
-      return res.status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json(error.message);
+      return res.status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json({
+        message: error.message,
+      });
     }
   };
 
@@ -87,10 +89,12 @@ const GroupController = () => {
       if (group) {
         return res.status(StatusCodes.OK).json({ group });
       } else {
-        return res.status(StatusCodes.CONFLICT).json('An error ocurred');
+        return res.status(StatusCodes.CONFLICT).json({ message: 'An error ocurred' });
       }
     } catch (error) {
-      return res.status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json(error.message);
+      return res
+        .status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ message: error.message });
     }
   };
 
@@ -103,10 +107,14 @@ const GroupController = () => {
       if (removed) {
         return res.status(StatusCodes.NO_CONTENT).send();
       } else {
-        return res.status(StatusCodes.CONFLICT).json('An error ocurred');
+        return res.status(StatusCodes.CONFLICT).json({
+          message: 'An error ocurred',
+        });
       }
     } catch (error) {
-      return res.status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json(error.message);
+      return res.status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json({
+        message: error.message,
+      });
     }
   };
 
