@@ -25,6 +25,7 @@ const GroupController = () => {
 
   const getAll = async (_req, res) => {
     console.log(2.1, '[Group] Controller Get All');
+
     const groups = await groupService.getAll();
 
     return res.status(StatusCodes.OK).json({
@@ -62,9 +63,7 @@ const GroupController = () => {
         return res.status(StatusCodes.CONFLICT).json('An error ocurred');
       }
     } catch (error) {
-      return res
-        .status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)
-        .json(error.message);
+      return res.status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json(error.message);
     }
   };
 
