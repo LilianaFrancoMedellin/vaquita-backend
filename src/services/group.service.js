@@ -65,4 +65,4 @@ const GroupService = () => {
   };
 };
 
-export { GroupService };
+export default GroupService();
