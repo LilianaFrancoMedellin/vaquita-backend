@@ -8,7 +8,6 @@ const GroupService = () => {
   const groupModel = GroupModel();
 
   const getById = (id) => {
-    console.log(id);
     console.log(3.1, '[Group] Service Get By Id');
 
     return groupModel.getById(id);
@@ -34,7 +33,6 @@ const GroupService = () => {
   };
 
   const editById = async (id, group) => {
-    console.log(id, group);
     console.log(3.1, '[Group] Service Edit');
 
     const existingGroup = await getById(id);
@@ -47,7 +45,6 @@ const GroupService = () => {
   };
 
   const removeById = async (id) => {
-    console.log(id);
     console.log(3.1, '[Group] Service Remove');
 
     const existingGroup = await getById(id);
