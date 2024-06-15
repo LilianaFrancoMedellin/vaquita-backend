@@ -2,6 +2,16 @@ import connectionPool from '../lib/connection.js';
 import bcrypt from 'bcrypt';
 
 const UserModel = () => {
+  const getAll = async () => {
+    const client = await connectionPool.connect();
+
+    const result = await client.query('SELECT * FROM Users');
+
+    client.release();
+
+    return result.rows;
+  };
+
   const create = async (user) => {
     user.password = await bcrypt.hash(user.password, 10);
     const { name, email, password } = user;
@@ -39,6 +49,7 @@ const UserModel = () => {
   };
 
   return {
+    getAll,
     create,
     getById,
     getByEmail,

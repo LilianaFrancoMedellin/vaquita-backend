@@ -5,6 +5,12 @@ const UserService = () => {
 
   const userModel = UserModel();
 
+  const getAll = () => {
+    console.log(3.1, '[User] Service Get By Id');
+
+    return userModel.getAll();
+  };
+
   const getById = (id) => {
     console.log(3.1, '[User] Service Get By Id');
 
@@ -24,6 +30,7 @@ const UserService = () => {
   };
 
   return {
+    getAll,
     getById,
     create,
     getByEmail,

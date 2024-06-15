@@ -6,6 +6,16 @@ const UserController = () => {
 
   const userService = UserService();
 
+  const getAll = async (req, res) => {
+    console.log(2.1, '[User] Controller Get All');
+
+    const users = await userService.getAll();
+
+    return res.status(StatusCodes.OK).json({
+      users,
+    });
+  };
+
   const getById = async (req, res) => {
     console.log(2.1, '[User] Controller Get By Id');
 
@@ -31,6 +41,7 @@ const UserController = () => {
   };
 
   return {
+    getAll,
     getById,
     create,
   };
