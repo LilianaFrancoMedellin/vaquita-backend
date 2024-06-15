@@ -15,12 +15,15 @@ const GroupModel = () => {
     return result.rows[0];
   };
 
-  const getAll = async () => {
+  const getAll = async (userId) => {
     console.log(4.1, '[Database] Model getAll');
 
     const client = await connectionPool.connect();
 
-    const result = await client.query('SELECT * FROM GROUPS');
+    const result = await client.query(
+      'SELECT * FROM GROUPS where owneruserid = $1 order by createdat desc',
+      [userId]
+    );
 
     client.release();
 
@@ -45,7 +48,7 @@ const GroupModel = () => {
     const client = await connectionPool.connect();
 
     const result = await client.query(
-      'INSERT INTO GROUPS (owneruserid, name, color, CREATEDAT) VALUES ($1, $2, $3, NOW()) RETURNING *',
+      'INSERT INTO GROUPS (owneruserid, name, color) VALUES ($1, $2, $3) RETURNING *',
       [entity.ownerUserId, entity.name, entity.color]
     );
 

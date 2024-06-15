@@ -13,10 +13,10 @@ const GroupService = () => {
     return groupModel.getById(id);
   };
 
-  const getAll = () => {
+  const getAll = (userId) => {
     console.log(3.1, '[Group] Service Get All');
 
-    return groupModel.getAll();
+    return groupModel.getAll(userId);
   };
 
   const create = async (newGroup) => {

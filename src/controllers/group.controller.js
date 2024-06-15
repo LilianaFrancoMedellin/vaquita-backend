@@ -23,10 +23,10 @@ const GroupController = () => {
     });
   };
 
-  const getAll = async (_req, res) => {
+  const getAll = async (req, res) => {
     console.log(2.1, '[Group] Controller Get All');
 
-    const groups = await groupService.getAll();
+    const groups = await groupService.getAll(req.user.id);
 
     return res.status(StatusCodes.OK).json({
       groups,
