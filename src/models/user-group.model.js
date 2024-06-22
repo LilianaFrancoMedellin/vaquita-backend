@@ -27,6 +27,20 @@ const UserGroupModel = () => {
     return result.rows;
   };
 
+  const countByGroup = async (groupId) => {
+    console.log(4.1, '[Database] Model count by group');
+
+    const client = await connectionPool.connect();
+
+    const result = await client.query('SELECT COUNT(*) FROM USERGROUP WHERE groupid = $1', [
+      groupId,
+    ]);
+
+    client.release();
+
+    return result.rows[0].count;
+  };
+
   const create = async (entity) => {
     console.log(4.1, '[Database] Model create');
 
@@ -54,11 +68,28 @@ const UserGroupModel = () => {
     return result.rowCount >= 1;
   };
 
+  const delByGroupAndUser = async (groupId, userId) => {
+    console.log(4.1, '[Database] Model delete');
+
+    const client = await connectionPool.connect();
+
+    const result = await client.query('DELETE FROM USERGROUP WHERE groupid = $1 and userid = $2', [
+      groupId,
+      userId,
+    ]);
+
+    client.release();
+
+    return result.rowCount >= 1;
+  };
+
   return {
     getAllByGroupId,
     getById,
+    countByGroup,
     create,
     delete: del,
+    delByGroupAndUser,
   };
 };
 

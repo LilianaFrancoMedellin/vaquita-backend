@@ -7,6 +7,7 @@ const GroupService = () => {
   console.log(3, '[Group] Service');
 
   const groupModel = GroupModel();
+  const userGroupModel = UserGroupModel();
 
   const getById = (id) => {
     console.log(3.1, '[Group] Service Get By Id');
@@ -33,7 +34,6 @@ const GroupService = () => {
     const groupCreated = await groupModel.create(newGroup);
 
     if (groupCreated) {
-      const userGroupModel = UserGroupModel();
       await userGroupModel.create({
         groupId: groupCreated.id,
         userId: newGroup.ownerUserId,
@@ -63,6 +63,14 @@ const GroupService = () => {
     if (!existingGroup) {
       throw new NotFoundException(`Group with id ${id} does not exist`);
     }
+
+    const count = await userGroupModel.countByGroup(id);
+
+    if (count > 1) {
+      throw new ConflictException(`Group with id ${id} has friends linked`);
+    }
+
+    await userGroupModel.delByGroupAndUser(id, existingGroup.owneruserid);
 
     return groupModel.delete(id);
   };
