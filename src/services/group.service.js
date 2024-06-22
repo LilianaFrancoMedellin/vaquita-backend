@@ -1,4 +1,5 @@
 import { GroupModel } from '../models/group.model.js';
+import { UserGroupModel } from '../models/user-group.model.js';
 import ConflictException from '../exceptions/conflict.exception.js';
 import NotFoundException from '../exceptions/not-found.exception.js';
 
@@ -29,7 +30,17 @@ const GroupService = () => {
       throw new ConflictException('The group already exists');
     }
 
-    return groupModel.create(newGroup);
+    const groupCreated = await groupModel.create(newGroup);
+
+    if (groupCreated) {
+      const userGroupModel = UserGroupModel();
+      await userGroupModel.create({
+        groupId: groupCreated.id,
+        userId: newGroup.ownerUserId,
+      });
+    }
+
+    return groupCreated;
   };
 
   const editById = async (id, group) => {
