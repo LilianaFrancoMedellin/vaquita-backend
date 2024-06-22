@@ -1,4 +1,4 @@
-import connectionPool from "../lib/connection.js";
+import connectionPool from '../lib/connection.js';
 
 const queries = [
   `CREATE TABLE IF NOT EXISTS Users (
@@ -17,6 +17,15 @@ const queries = [
     createdAt DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(id),
     CONSTRAINT fk_groups_users_id FOREIGN KEY(ownerUserId) REFERENCES Users(id)
+  );`,
+  `CREATE TABLE IF NOT EXISTS UserGroup (
+    id SERIAL,
+    userId INTEGER NOT NULL,
+    groupId INTEGER NOT NULL,
+    createdAt DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(id),
+    CONSTRAINT fk_user_group_user_id FOREIGN KEY(userId) REFERENCES Users(id),
+    CONSTRAINT fk_user_group_group_id FOREIGN KEY(groupId) REFERENCES Groups(id)
   );`,
   `INSERT INTO Users (name, email, password, createdAt) VALUES 
     ('miguel', 'miguel@gmail.com', 'password', '2023-01-02'),
@@ -44,7 +53,7 @@ async function runMigrations() {
   for (let query of queries) {
     await client.query(query);
   }
-  console.log("Migrations ran successfully");
+  console.log('Migrations ran successfully');
   client.end();
 }
 

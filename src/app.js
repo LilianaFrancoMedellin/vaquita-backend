@@ -4,6 +4,7 @@ import cors from 'cors';
 import { GroupRouter } from './router/group.router.js';
 import { UserRouter } from './router/user.router.js';
 import { AuthRouter } from './router/auth.router.js';
+import { UserGroupRouter } from './router/user-group.router.js';
 import { applyJWTAuthentication } from './middlewares/auth.middleware.js';
 import './utils/passport.config.js'; // Your Passport configuration
 
@@ -19,6 +20,7 @@ app.use(applyJWTAuthentication);
 
 app.use('/groups', GroupRouter().registerRoutes());
 app.use('/users', UserRouter().registerRoutes());
+app.use('/user-group', UserGroupRouter().registerRoutes());
 app.use('/auth', AuthRouter().registerRoutes());
 
 app.listen(PORT, () => {
