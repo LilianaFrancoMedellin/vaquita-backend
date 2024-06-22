@@ -32,7 +32,7 @@ const UserGroupController = () => {
     try {
       const userGroup = await userGroupService.create(value);
 
-      if (group) {
+      if (userGroup) {
         return res.status(StatusCodes.CREATED).json({ userGroup });
       } else {
         return res.status(StatusCodes.CONFLICT).json({
