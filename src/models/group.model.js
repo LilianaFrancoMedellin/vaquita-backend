@@ -8,7 +8,10 @@ const GroupModel = () => {
 
     const client = await connectionPool.connect();
 
-    const result = await client.query('SELECT * FROM GROUPS WHERE ID = $1', [id]);
+    const result = await client.query(
+      'SELECT g.*, (select count(*) from USERGROUP where groupid = g.id) as participants FROM GROUPS g WHERE g.id = $1',
+      [id]
+    );
 
     client.release();
 
