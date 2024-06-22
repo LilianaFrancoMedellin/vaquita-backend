@@ -30,10 +30,10 @@ const UserGroupController = () => {
     }
 
     try {
-      const group = await userGroupService.create(value);
+      const userGroup = await userGroupService.create(value);
 
       if (group) {
-        return res.status(StatusCodes.CREATED).json({ group });
+        return res.status(StatusCodes.CREATED).json({ userGroup });
       } else {
         return res.status(StatusCodes.CONFLICT).json({
           message: 'An error ocurred',

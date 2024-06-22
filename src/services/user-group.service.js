@@ -41,15 +41,6 @@ const UserGroupService = () => {
       }
     });
 
-    usersId.forEach(async (userId) => {
-      const userModel = UserModel();
-      const existingUser = await userModel.getById(userId);
-
-      if (!existingUser) {
-        throw new ConflictException('The user does not exists');
-      }
-    });
-
     const userGroups = [];
 
     usersId.forEach(async (userId) => {
