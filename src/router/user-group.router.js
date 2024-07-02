@@ -10,6 +10,7 @@ const UserGroupRouter = () => {
     console.log(1.1, '[User Group] Routes Registered');
 
     router.get('/:groupId', userGroupController.getAllByGroupId);
+    router.get('/users/:groupId', userGroupController.getAvailableUsersByGroupId);
     router.post('/', userGroupController.create);
     router.delete('/:id', userGroupController.removeById);
 

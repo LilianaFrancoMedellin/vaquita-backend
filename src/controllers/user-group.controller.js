@@ -15,6 +15,16 @@ const UserGroupController = () => {
     });
   };
 
+  const getAvailableUsersByGroupId = async (req, res) => {
+    console.log(2.1, '[Group] Controller Get Available Users by Group Id');
+
+    const users = await userGroupService.getAvailableUsersByGroupId(req.params.groupId);
+
+    return res.status(StatusCodes.OK).json({
+      users,
+    });
+  };
+
   const create = async (req, res) => {
     console.log(2.1, '[User Group] Controller Create');
 
@@ -68,6 +78,7 @@ const UserGroupController = () => {
 
   return {
     getAllByGroupId,
+    getAvailableUsersByGroupId,
     create,
     removeById,
   };

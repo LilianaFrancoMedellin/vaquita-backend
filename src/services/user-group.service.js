@@ -15,10 +15,16 @@ const UserGroupService = () => {
     return userGroupModel.getById(id);
   };
 
-  const getAllByGroupId = (id) => {
+  const getAllByGroupId = (groupId) => {
     console.log(3.1, '[Group] Service Get All by Group Id');
 
-    return userGroupModel.getAllByGroupId(id);
+    return userGroupModel.getAllByGroupId(groupId);
+  };
+
+  const getAvailableUsersByGroupId = (groupId) => {
+    console.log(3.1, '[Group] Service Get Available Users by Group Id');
+
+    return userGroupModel.getAvailableUsersByGroupId(groupId);
   };
 
   const create = async (userGroup) => {
@@ -37,7 +43,7 @@ const UserGroupService = () => {
       const existingUser = await userModel.getById(userId);
 
       if (!existingUser) {
-        throw new ConflictException('The user does not exists');
+        throw new ConflictException(`The user with id ${userId} does not exists`);
       }
     });
 
@@ -69,6 +75,7 @@ const UserGroupService = () => {
 
   return {
     getAllByGroupId,
+    getAvailableUsersByGroupId,
     create,
     removeById,
   };

@@ -25,7 +25,8 @@ const queries = [
     createdAt DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(id),
     CONSTRAINT fk_user_group_user_id FOREIGN KEY(userId) REFERENCES Users(id),
-    CONSTRAINT fk_user_group_group_id FOREIGN KEY(groupId) REFERENCES Groups(id)
+    CONSTRAINT fk_user_group_group_id FOREIGN KEY(groupId) REFERENCES Groups(id),
+    UNIQUE (userId, groupId)
   );`,
   `INSERT INTO Users (name, email, password, createdAt) VALUES 
     ('miguel', 'miguel@gmail.com', 'password', '2023-01-02'),
