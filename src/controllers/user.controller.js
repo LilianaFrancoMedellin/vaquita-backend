@@ -1,5 +1,6 @@
 import { UserService } from '../services/user.service.js';
 import { StatusCodes } from 'http-status-codes';
+import jwt from 'jsonwebtoken';
 
 const UserController = () => {
   console.log(2, '[User] Controller');
@@ -37,7 +38,13 @@ const UserController = () => {
 
     const user = await userService.create(req.body);
 
-    return res.status(StatusCodes.CREATED).json(user);
+    const payload = { id: user.id };
+    const token = jwt.sign(payload, process.env.JWT_SECRET);
+
+    return res.status(StatusCodes.CREATED).json({
+      ...user,
+      token,
+    });
   };
 
   return {
