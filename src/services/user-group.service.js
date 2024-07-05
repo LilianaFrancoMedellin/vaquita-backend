@@ -32,9 +32,9 @@ const UserGroupService = () => {
     const { groupId, usersId } = userGroup;
 
     const groupModel = GroupModel();
-    const existingGroup = await groupModel.getById(groupId);
+    const countGroup = await groupModel.countById(groupId);
 
-    if (!existingGroup) {
+    if (countGroup === 0) {
       throw new ConflictException('The group does not exists');
     }
 

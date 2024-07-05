@@ -3,19 +3,35 @@ import connectionPool from '../lib/connection.js';
 const GroupModel = () => {
   console.log(4, '[Group] Model');
 
-  const getById = async (id) => {
+  const getById = async (id, userId) => {
     console.log(4.1, '[Database] Model getById');
 
     const client = await connectionPool.connect();
 
     const result = await client.query(
-      'SELECT g.*, (select count(*) from USERGROUP where groupid = g.id) as participants FROM GROUPS g WHERE g.id = $1',
-      [id]
+      `SELECT g.*, ug.userid as userid, ug.id as usergroupid,
+        (SELECT count(*) from usergroup where groupid = g.id) as participants
+      FROM groups g
+      join usergroup ug on g.id = ug.groupid and ug.userid = $2
+      WHERE ug.groupid = $1`,
+      [id, userId]
     );
 
     client.release();
 
     return result.rows[0];
+  };
+
+  const countById = async (id) => {
+    console.log(4.1, '[Database] Model count by id');
+
+    const client = await connectionPool.connect();
+
+    const result = await client.query('SELECT COUNT(*) FROM groups WHERE id = $1', [id]);
+
+    client.release();
+
+    return result.rows[0].count;
   };
 
   const getAll = async (userId) => {
@@ -24,7 +40,10 @@ const GroupModel = () => {
     const client = await connectionPool.connect();
 
     const result = await client.query(
-      'SELECT * FROM GROUPS where owneruserid = $1 order by createdat desc',
+      `SELECT g.*, ug.userid as userid, ug.id as usergroupid
+      FROM groups g
+      join usergroup ug on g.id = ug.groupid
+      WHERE ug.userid = $1 order by g.createdat desc`,
       [userId]
     );
 
@@ -90,6 +109,7 @@ const GroupModel = () => {
   return {
     getById,
     getAll,
+    countById,
     create,
     delete: del,
     update,

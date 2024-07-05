@@ -9,10 +9,10 @@ const GroupService = () => {
   const groupModel = GroupModel();
   const userGroupModel = UserGroupModel();
 
-  const getById = (id) => {
+  const getById = (id, userId) => {
     console.log(3.1, '[Group] Service Get By Id');
 
-    return groupModel.getById(id);
+    return groupModel.getById(id, userId);
   };
 
   const getAll = (userId) => {
@@ -46,31 +46,31 @@ const GroupService = () => {
   const editById = async (id, group) => {
     console.log(3.1, '[Group] Service Edit');
 
-    const existingGroup = await getById(id);
+    const countGroup = await groupModel.countById(id);
 
-    if (!existingGroup) {
+    if (countGroup === 0) {
       throw new NotFoundException(`Group with id ${id} does not exist`);
     }
 
     return groupModel.update(id, group);
   };
 
-  const removeById = async (id) => {
+  const removeById = async (id, userId) => {
     console.log(3.1, '[Group] Service Remove');
 
-    const existingGroup = await getById(id);
+    const countGroup = await groupModel.countById(id, userId);
 
-    if (!existingGroup) {
+    if (countGroup === 0) {
       throw new NotFoundException(`Group with id ${id} does not exist`);
     }
 
-    const count = await userGroupModel.countByGroup(id);
+    const countUserGroup = await userGroupModel.countByGroup(id);
 
-    if (count > 1) {
+    if (countUserGroup > 1) {
       throw new ConflictException(`Group with id ${id} has friends linked`);
     }
 
-    await userGroupModel.delByGroupAndUser(id, existingGroup.owneruserid);
+    await userGroupModel.delByGroupAndUser(id, userId);
 
     return groupModel.delete(id);
   };

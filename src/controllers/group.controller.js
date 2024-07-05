@@ -10,7 +10,7 @@ const GroupController = () => {
   const getById = async (req, res) => {
     console.log(2.1, '[Group] Controller Get By Id');
 
-    const group = await groupService.getById(req.params.id);
+    const group = await groupService.getById(req.params.id, req.user.id);
 
     if (!group) {
       return res
@@ -102,7 +102,7 @@ const GroupController = () => {
     console.log(2.1, '[Group] Controller Remove');
 
     try {
-      const removed = await groupService.removeById(req.params.id);
+      const removed = await groupService.removeById(req.params.id, req.user.id);
 
       if (removed) {
         return res.status(StatusCodes.NO_CONTENT).send();
