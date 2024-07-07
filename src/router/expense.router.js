@@ -1,5 +1,7 @@
 import express from 'express';
 import { ExpenseController } from '../controllers/expense.controller.js';
+import expensesSchemaValidation from '../validations/expenses.schema.validation.js';
+import validateSchema from '../middlewares/validate-schema.middleware.js';
 
 const ExpenseRouter = () => {
   const expenseController = ExpenseController();
@@ -10,7 +12,7 @@ const ExpenseRouter = () => {
     console.log(1.1, '[Expense] Routes Registered');
 
     router.get('/:groupId', expenseController.getAllByGroup);
-    router.post('/', expenseController.create);
+    router.post('/', validateSchema(expensesSchemaValidation), expenseController.create);
 
     return router;
   };

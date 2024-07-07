@@ -1,6 +1,5 @@
 import { ExpenseService } from '../services/expense.service.js';
 import { StatusCodes } from 'http-status-codes';
-import expensesSchemaValidation from '../validations/expenses.schema.validation.js';
 
 const ExpenseController = () => {
   console.log(2, '[Expense] Controller');
@@ -20,18 +19,7 @@ const ExpenseController = () => {
   const create = async (req, res) => {
     console.log(2.1, '[Expense] Controller Create');
 
-    const { error, value } = expensesSchemaValidation.validate(req.body, {
-      abortEarly: false,
-      stripUnknown: true,
-    });
-
-    if (error) {
-      return res.status(StatusCodes.BAD_REQUEST).json({
-        messages: error.details.map((detail) => detail.message),
-      });
-    }
-
-    const expense = await expenseService.create(value);
+    const expense = await expenseService.create(req.body);
 
     return res.status(StatusCodes.CREATED).json(expense);
   };

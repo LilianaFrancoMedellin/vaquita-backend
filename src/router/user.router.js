@@ -1,5 +1,7 @@
 import express from 'express';
 import { UserController } from '../controllers/user.controller.js';
+import userSchemaValidation from '../validations/user.schema.validation.js';
+import validateSchema from '../middlewares/validate-schema.middleware.js';
 
 const UserRouter = () => {
   const userController = UserController();
@@ -11,7 +13,7 @@ const UserRouter = () => {
 
     router.get('/', userController.getAll);
     router.get('/:id', userController.getById);
-    router.post('/', userController.create);
+    router.post('/', validateSchema(userSchemaValidation), userController.create);
 
     return router;
   };

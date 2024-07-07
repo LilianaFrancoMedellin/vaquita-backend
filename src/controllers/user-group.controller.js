@@ -1,5 +1,4 @@
 import userGroupService from '../services/user-group.service.js';
-import userGroupSchemaValidation from '../validations/user-group.schema.validation.js';
 import { StatusCodes } from 'http-status-codes';
 
 const UserGroupController = () => {
@@ -28,19 +27,8 @@ const UserGroupController = () => {
   const create = async (req, res) => {
     console.log(2.1, '[User Group] Controller Create');
 
-    const { error, value } = userGroupSchemaValidation.validate(req.body, {
-      abortEarly: false,
-      stripUnknown: true,
-    });
-
-    if (error) {
-      return res.status(StatusCodes.BAD_REQUEST).json({
-        messages: error.details.map((detail) => detail.message),
-      });
-    }
-
     try {
-      const userGroup = await userGroupService.create(value);
+      const userGroup = await userGroupService.create(req.body);
 
       if (userGroup) {
         return res.status(StatusCodes.CREATED).json({ userGroup });

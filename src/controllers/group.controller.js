@@ -1,5 +1,4 @@
 import { GroupService } from '../services/group.service.js';
-import groupsSchemaValidation from '../validations/groups.schema.validation.js';
 import { StatusCodes } from 'http-status-codes';
 
 const GroupController = () => {
@@ -36,26 +35,13 @@ const GroupController = () => {
   const create = async (req, res) => {
     console.log(2.1, '[Group] Controller Create');
 
-    const { error, value } = groupsSchemaValidation.validate(req.body, {
-      abortEarly: false,
-      stripUnknown: true,
-    });
-
-    if (error) {
-      return res.status(StatusCodes.BAD_REQUEST).json({
-        messages: error.details.map((detail) => detail.message),
-      });
-    }
-
-    // creating our own body only with the fields we really need (name & color only)
-    // doing this we discard the rest of the fields we may receive in the body
-    const sanitizedBody = {
-      ...value,
+    const body = {
+      ...req.body,
       ownerUserId: req.user.id,
     };
 
     try {
-      const group = await groupService.create(sanitizedBody);
+      const group = await groupService.create(body);
 
       if (group) {
         return res.status(StatusCodes.CREATED).json({ group });
@@ -72,19 +58,8 @@ const GroupController = () => {
   const editById = async (req, res) => {
     console.log(2.1, '[Group] Controller Edit');
 
-    const { error, value } = groupsSchemaValidation.validate(req.body, {
-      abortEarly: false,
-      stripUnknown: true,
-    });
-
-    if (error) {
-      return res.status(StatusCodes.BAD_REQUEST).json({
-        messages: error.details.map((detail) => detail.message),
-      });
-    }
-
     try {
-      const group = await groupService.editById(req.params.id, value);
+      const group = await groupService.editById(req.params.id, req.body);
 
       if (group) {
         return res.status(StatusCodes.OK).json({ group });

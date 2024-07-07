@@ -1,5 +1,7 @@
 import express from 'express';
 import { AuthController } from '../controllers/auth.controller.js';
+import authSchemaValidation from '../validations/auth.schema.validation.js';
+import validateSchema from '../middlewares/validate-schema.middleware.js';
 
 const AuthRouter = () => {
   const authController = AuthController();
@@ -9,7 +11,7 @@ const AuthRouter = () => {
     const router = express.Router();
     console.log(1.1, '[Auth] Routes Registered');
 
-    router.post('/login', authController.login);
+    router.post('/login', validateSchema(authSchemaValidation), authController.login);
 
     return router;
   };
