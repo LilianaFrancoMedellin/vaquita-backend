@@ -28,6 +28,18 @@ const queries = [
     CONSTRAINT fk_user_group_group_id FOREIGN KEY(groupId) REFERENCES Groups(id),
     UNIQUE (userId, groupId)
   );`,
+  `CREATE TABLE IF NOT EXISTS Expenses (
+    id SERIAL,
+    ownerUserId INTEGER NOT NULL,
+    groupId INTEGER NOT NULL,
+    description VARCHAR(300) NOT NULL,
+    total NUMERIC NOT NULL,
+    divisionType VARCHAR(20) NOT NULL,
+    createdAt DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(id),
+    CONSTRAINT fk_expenses_owner_user_id FOREIGN KEY(ownerUserId) REFERENCES Users(id),
+    CONSTRAINT fk_expenses_group_id FOREIGN KEY(groupId) REFERENCES Groups(id)
+  );`,
   `INSERT INTO Users (name, email, password, createdAt) VALUES 
     ('miguel', 'miguel@gmail.com', 'password', '2023-01-02'),
     ('juan camilo', 'juancamilo@gmail.com', 'password', '2024-03-14'),
