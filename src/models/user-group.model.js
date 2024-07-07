@@ -15,12 +15,15 @@ const UserGroupModel = () => {
     return result.rows[0];
   };
 
-  const getAllByGroupId = async (groupId) => {
-    console.log(4.1, '[Database] Model getAllByGroupId');
+  const getAllUsersByGroupId = async (groupId) => {
+    console.log(4.1, '[Database] Model getAllUsersByGroupId');
 
     const client = await connectionPool.connect();
 
-    const result = await client.query('SELECT * FROM USERGROUP WHERE groupid = $1', [groupId]);
+    const result = await client.query(
+      'select u.id, u.name, u.email from USERS u JOIN USERGROUP ug on u.id = ug.userid WHERE ug.groupid = $1',
+      [groupId]
+    );
 
     client.release();
 
@@ -99,7 +102,7 @@ const UserGroupModel = () => {
   };
 
   return {
-    getAllByGroupId,
+    getAllUsersByGroupId,
     getAvailableUsersByGroupId,
     getById,
     countByGroup,

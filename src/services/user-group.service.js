@@ -15,10 +15,10 @@ const UserGroupService = () => {
     return userGroupModel.getById(id);
   };
 
-  const getAllByGroupId = (groupId) => {
-    console.log(3.1, '[Group] Service Get All by Group Id');
+  const getAllUsersByGroupId = (groupId) => {
+    console.log(3.1, '[Group] Service Get All Users by Group Id');
 
-    return userGroupModel.getAllByGroupId(groupId);
+    return userGroupModel.getAllUsersByGroupId(groupId);
   };
 
   const getAvailableUsersByGroupId = (groupId) => {
@@ -74,7 +74,7 @@ const UserGroupService = () => {
   };
 
   return {
-    getAllByGroupId,
+    getAllUsersByGroupId,
     getAvailableUsersByGroupId,
     create,
     removeById,

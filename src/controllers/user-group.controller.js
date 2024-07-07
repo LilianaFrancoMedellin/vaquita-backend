@@ -5,13 +5,13 @@ import { StatusCodes } from 'http-status-codes';
 const UserGroupController = () => {
   console.log(2, '[User Group] Controller');
 
-  const getAllByGroupId = async (req, res) => {
-    console.log(2.1, '[Group] Controller Get All by Group Id');
+  const getAllUsersByGroupId = async (req, res) => {
+    console.log(2.1, '[Group] Controller Get All Users by Group Id');
 
-    const userGroups = await userGroupService.getAllByGroupId(req.params.groupId);
+    const users = await userGroupService.getAllUsersByGroupId(req.params.groupId);
 
     return res.status(StatusCodes.OK).json({
-      userGroups,
+      users,
     });
   };
 
@@ -77,7 +77,7 @@ const UserGroupController = () => {
   };
 
   return {
-    getAllByGroupId,
+    getAllUsersByGroupId,
     getAvailableUsersByGroupId,
     create,
     removeById,
